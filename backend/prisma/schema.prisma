@@ -5,25 +5,38 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
   id Int @id @default (autoincrement())
-  email String?
+  email String? @unique
   password String?
   isAdmin Boolean @default(false)
 }
 
 model JenisKdrt {
   id Int @id @default(autoincrement())
-  nama String 
-  ciriKdrt CiriKdrt []
+  nama String
+  ciriKdrt CiriKdrt[]
+  // aturan Aturan[]
 }
 
 model CiriKdrt {
   id Int @id @default(autoincrement())
   nama String
-  id_jeniskdrt Int 
-  id_jk JenisKdrt @relation(fields: [id_jeniskdrt], references: [id])
+  id_jk Int 
+  // aturan Aturan[]
+  jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
 }
+
+// model Aturan {
+//   id Int @id @default(autoincrement())
+//   id_jk Int
+//   id_ck Int 
+//   ciriKdrt CiriKdrt @relation(fields: [id_ck], references: [id])
+//   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
+// }
+
+
 

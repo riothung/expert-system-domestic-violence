@@ -1,8 +1,9 @@
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const prisma = require("../db");
 
-const registerAdmin = async (req, res) => {
+const registerUser = async (req, res) => {
   const { fullName, email, password } = req.body;
   if (!fullName || !req.body.email || !req.body.password) return res.json({ message: "Nama, Email dan Password harus diisi !" });
 
@@ -18,7 +19,7 @@ const registerAdmin = async (req, res) => {
           fullName: req.body.fullName,
           email: req.body.email,
           password: hashedPassword,
-          isAdmin: true,
+          isAdmin: false,
         },
       });
       if (admin) return res.status(200).json({ message: "Account created successfully" });
@@ -30,7 +31,7 @@ const registerAdmin = async (req, res) => {
   }
 };
 
-const loginAdmin = async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!req.body.email || !req.body.password) return res.json({ message: "Email and Password are required!" });
@@ -53,6 +54,6 @@ const loginAdmin = async (req, res) => {
 };
 
 module.exports = {
-  registerAdmin,
-  loginAdmin,
+  registerUser,
+  loginUser,
 };

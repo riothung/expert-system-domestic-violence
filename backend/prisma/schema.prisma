@@ -10,7 +10,7 @@ datasource db {
 
 model User {
   id Int @id @default (autoincrement())
-  fullName String?
+  fullName String? @db.VarChar(50)
   email String? @unique
   password String?
   isAdmin Boolean @default(false)

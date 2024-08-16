@@ -45,14 +45,20 @@ const loginAdmin = async (req, res) => {
       const token = jwt.sign({ _id: checkEmail.id }, "secret", {
         expiresIn: "2d",
       });
-      res.cookie("token", token,).status(200).json({ message: "Login success!" });
+      res.cookie("token", token).status(200).json({ message: "Login success!" });
     }
   } catch (error) {
     return res.status(401).json({ message: "Login gagal!" });
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logout success!" });
+};
+
 module.exports = {
   registerAdmin,
   loginAdmin,
+  logout,
 };

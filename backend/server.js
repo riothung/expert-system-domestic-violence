@@ -2,7 +2,7 @@ const sql = require("./db");
 const express = require("express");
 const cors = require("cors");
 // const db = require("./supabase");
-const router = require("./routes/index")
+const router = require("./routes/index");
 
 const app = express();
 
@@ -26,8 +26,8 @@ app.use(
   })
 );
 
-app.use(router)
+app.use(router);
 
-app.listen(3000, () => {
+app.listen(4000, () => {
   console.log("server is ready");
 });

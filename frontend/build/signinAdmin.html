@@ -50,14 +50,6 @@
                 Sign In
               </h2>
 
-              <nav>
-                <ol class="flex items-center gap-2">
-                  <li>
-                    <a class="font-medium" href="signup.html">Sign Up /</a>
-                  </li>
-                  <li class="font-medium text-primary">Sign In</li>
-                </ol>
-              </nav>
             </div>
             <!-- Breadcrumb End -->
 
@@ -68,13 +60,7 @@
               <div class="flex flex-wrap items-center">
                 <div class="hidden w-full xl:block xl:w-1/2">
                   <div class="px-26 py-17.5 text-center">
-                    <h1 class="font-bold text-black text-2xl underline "> Sign In</h1>
-
-                    <p class="font-medium pt-3 2xl:px-20">
-                      Ingin konsul dengan pakar? <br>
-                      Sign Up <b>sekarang!</b> 
-                    </p>
-
+                    <h1 class="font-bold text-black text-2xl underline "> EXPERT ONLY</h1>
                     <span class="mt-15 inline-block">
                       <img
                         src="src/images/illustration/illustration-03.svg"
@@ -93,17 +79,17 @@
                       Sign In to Expert System
                     </h2>
 
-                    <form>
+                    <form id="signInAdmin">
                       <div class="mb-4">
                         <label
                           class="mb-2.5 block font-medium text-black dark:text-white"
                           >Email</label
                         >
                         <div class="relative">
-                          <input
+                          <input id="email"
                             type="email"
                             placeholder="Enter your email"
-                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-red-500 focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                           />
 
                           <span class="absolute right-4 top-4">
@@ -132,10 +118,10 @@
                           >Password</label
                         >
                         <div class="relative">
-                          <input
+                          <input id="password"
                             type="password"
                             placeholder="Enter your password"
-                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-red-500 focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                           />
 
                           <span class="absolute right-4 top-4">
@@ -166,7 +152,7 @@
                         <input
                           type="submit"
                           value="Sign In"
-                          class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
+                          class="w-full cursor-pointer rounded-lg border border-red-300 bg-red-500 p-4 font-medium text-white transition hover:bg-opacity-90"
                         />
                       </div>
 
@@ -179,7 +165,7 @@
                       <div class="mt-6 text-center">
                         <p class="font-medium">
                           Don’t have any account?
-                          <a href="signup.html" class="text-primary">Sign Up</a>
+                          <a href="signupAdmin.html" class="text-red-500">Sign Up</a>
                         </p>
                       </div>
                     </form>
@@ -194,6 +180,10 @@
       </div>
       <!-- ===== Content Area End ===== -->
     </div>
+    <script src="src/login/signinAdmin.js"></script>
+    <script>
+      console.log("bayu noo")
+    </script>
     <!-- ===== Page Wrapper End ===== -->
   <script defer src="bundle.js"></script></body>
 </html>

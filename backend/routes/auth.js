@@ -1,15 +1,12 @@
 const router = require("express").Router();
-const auth = require("../controllers/authAdmin");
-const authUser = require("../controllers/authUser");
+const auth = require("../controllers/authController.js");
 const verify = require("../utils/verifyToken");
 
 router.post("/signup", auth.registerAdmin);
-router.post("/login", auth.loginAdmin);
-router.post("/signupUser", authUser.registerUser);
-router.post("/loginUser", authUser.loginUser);
+router.post("/login", auth.login);
+router.post("/signupUser", auth.registerUser);
+// router.post("/loginUser", auth.login);
 router.post("/logout", auth.logout);
-router.get("/test", verify, function (req, res) {
-  res.send("test");
-});
+router.get("/verify", verify, auth.checkAuthUser);
 
 module.exports = router;

@@ -61,7 +61,8 @@ const registerUser = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!req.body.email || !req.body.password) return res.json({ message: "Email and Password are required!" });
+    console.log(req.body);
+    if (!email || !password) return res.json({ message: "Email and Password are required!" });
 
     if (req.body.email !== "" && req.body.password !== "") {
       const user = await prisma.user.findUnique({ where: { email: req.body.email } });
@@ -75,7 +76,7 @@ const login = async (req, res) => {
           expiresIn: "2d",
         });
         // console.log(token);
-        res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: true });
+        res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: true, success: true });
         // res.redirect("http://localhost:3000/index.html");
       } else {
         const token = jwt.sign({ _id: user.id, isAdmin: false }, "secret", {

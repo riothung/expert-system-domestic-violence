@@ -50,6 +50,7 @@ const registerUser = async (req, res) => {
         },
       });
       if (admin) return res.status(200).json({ message: "Account created successfully" });
+      res.redirect("/login");
     } else {
       return res.status(400).json({ message: "Email atau Password salah!" });
     }
@@ -61,7 +62,7 @@ const registerUser = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     if (!email || !password) return res.json({ message: "Email and Password are required!" });
 
     if (req.body.email !== "" && req.body.password !== "") {
@@ -75,14 +76,13 @@ const login = async (req, res) => {
         const token = jwt.sign({ _id: user.id, isAdmin: true }, "secret", {
           expiresIn: "2d",
         });
-        // console.log(token);
         res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: true, success: true });
-        // res.redirect("http://localhost:3000/index.html");
+        // res.redirect("../index.html");
       } else {
         const token = jwt.sign({ _id: user.id, isAdmin: false }, "secret", {
           expiresIn: "2d",
         });
-        res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: false });
+        res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: false, success: true });
       }
     }
   } catch (error) {

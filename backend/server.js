@@ -28,6 +28,6 @@ app.use(
 
 app.use(router);
 
-app.listen(4000, () => {
+app.listen(3000, () => {
   console.log("server is ready");
 });

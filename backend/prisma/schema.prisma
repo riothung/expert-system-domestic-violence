@@ -14,28 +14,64 @@ model User {
   email String? @unique
   password String?
   isAdmin Boolean @default(false)
+  konsul Konsul[]
 }
 
 model JenisKdrt {
   id Int @id @default(autoincrement())
   nama String
-  ciriKdrt CiriKdrt[]
+  faktorKdrt FaktorKdrt[]
+  konsul Konsul[]
+  prosedur Prosedur[]
   // aturan Aturan[]
 }
 
-model CiriKdrt {
+model FaktorKdrt {
   id Int @id @default(autoincrement())
   nama String
   id_jk Int 
   // aturan Aturan[]
   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
+  konsul Konsul[]
+}
+
+model DasarHukum {
+  id Int @id @default(autoincrement())
+  undangUndang String
+  pasal Int
+  ayat Int
+  isi String
+  konsul Konsul[]
+}
+
+model Prosedur {
+  id Int @id @default(autoincrement())
+  prosedur String
+  id_jk Int
+  jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
+  konsul Konsul[]
+}
+
+model Konsul {
+  id Int @id @default(autoincrement())
+  date DateTime
+  id_user Int
+  user User @relation(fields: [id_user], references: [id])
+  id_jk Int
+  jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
+  id_fk Int
+  faktorKdrt FaktorKdrt @relation(fields: [id_fk], references: [id])
+  id_pasal Int
+  dasarHukum DasarHukum @relation(fields: [id_pasal], references: [id])
+  id_prosedur Int
+  prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
 }
 
 // model Aturan {
 //   id Int @id @default(autoincrement())
 //   id_jk Int
 //   id_ck Int 
-//   ciriKdrt CiriKdrt @relation(fields: [id_ck], references: [id])
+//   faktorKdrt CiriKdrt @relation(fields: [id_ck], references: [id])
 //   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
 // }
 

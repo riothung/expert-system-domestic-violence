@@ -8,7 +8,6 @@ module.exports = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (er) {
-    console.log(er);
     res.clearCookie("token");
     return res.status(400).json(er.message);
   }

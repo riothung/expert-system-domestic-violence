@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id Int @id @default (autoincrement())
+  id Int @id @default(autoincrement())
   fullName String? @db.VarChar(50)
   email String? @unique
   password String?
@@ -21,7 +21,6 @@ model JenisKdrt {
   id Int @id @default(autoincrement())
   nama String
   faktorKdrt FaktorKdrt[]
-  konsul Konsul[]
   prosedur Prosedur[]
   // aturan Aturan[]
 }
@@ -32,7 +31,7 @@ model FaktorKdrt {
   id_jk Int 
   // aturan Aturan[]
   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
-  konsul Konsul[]
+  jawaban Jawaban[]
 }
 
 model DasarHukum {
@@ -41,7 +40,6 @@ model DasarHukum {
   pasal Int
   ayat Int
   isi String
-  konsul Konsul[]
 }
 
 model Prosedur {
@@ -54,17 +52,21 @@ model Prosedur {
 
 model Konsul {
   id Int @id @default(autoincrement())
-  date DateTime
+  date DateTime @default(now())
   id_user Int
   user User @relation(fields: [id_user], references: [id])
-  id_jk Int
-  jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
+  jawaban Jawaban[]
+  id_prosedur Int?
+  prosedur Prosedur? @relation(fields: [id_prosedur], references: [id])
+}
+
+model Jawaban {
+  id Int @id @default(autoincrement())
+  pertanyaan String
   id_fk Int
   faktorKdrt FaktorKdrt @relation(fields: [id_fk], references: [id])
-  id_pasal Int
-  dasarHukum DasarHukum @relation(fields: [id_pasal], references: [id])
-  id_prosedur Int
-  prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
+  id_konsul Int
+  konsul Konsul @relation(fields: [id_konsul], references: [id])
 }
 
 // model Aturan {

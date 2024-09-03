@@ -2,7 +2,7 @@ const pasalKdrt = document.getElementById("pasal");
 const getPasal = async () => {
   const response = await fetch("http://localhost:3000/pasal");
   const json = await response.json();
-  console.log(json);
+  // console.log(json);
   let i = 1;
   json.forEach((element) => {
     const data = document.createElement("tr");

@@ -92,46 +92,27 @@ const insertPertanyaan = async (req, res) => {
       },
     });
 
-    const dataPertanyaan = req.body;
+    const dataPertanyaan = req.body.pertanyaan;
+    console.log(dataPertanyaan);
 
     if (dataPertanyaan) {
-      for (let i = 0; i < dataPertanyaan.length; i++) {
-        const pertanyaan = dataPertanyaan[i];
+      const keys = Object.keys(dataPertanyaan);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const value = dataPertanyaan[key];
+
         const jawabanUser = {
-          id_fk: pertanyaan.id_fk,
+          id_fk: parseInt(key), // assuming `id_fk` is the key in this case
           id_konsul: newKonsul.id,
-          pertanyaan: pertanyaan.pertanyaan,
+          pertanyaan: String(value), // replace with actual question text if available
+          // jawaban: value,
         };
-        // await prisma.pertanyaan.create({ data });
+
+        await prisma.jawaban.create({ data: jawabanUser });
+        console.log(jawabanUser); // to check the output
       }
     }
-    // const dataPertanyaan = [
-    //   {
-    //     pertanyaan: "Apakah anda mempunyai pasangan yang ringan tangan?",
-    //     id_fk: 1,
-    //     id_konsul: newKonsul.id,
-    //   },
-    //   {
-    //     pertanyaan: "Apakah anda mengalami pelecehan secara verbal dan emosional?",
-    //     id_fk: 5,
-    //     id_konsul: newKonsul.id,
-    //   },
-    //   {
-    //     pertanyaan: "Apakah anda mempunyai trauma seksual masa lalu?",
-    //     id_fk: 10,
-    //     id_konsul: newKonsul.id,
-    //   },
-    //   {
-    //     pertanyaan: "Apakah pasangan anda mempunyai sikap acuh tak acuh terhadap rumah tangga anda?",
-    //     id_fk: 15,
-    //     id_konsul: newKonsul.id,
-    //   },
-    // ];
-    const newPertanyaan = await prisma.jawaban.createMany({
-      data: jawabanUser,
-    });
-
-    return res.json(newPertanyaan);
+    return res.json("Berhasil");
   } catch (error) {
     console.log(error);
     return res.json({ error: error.message });
@@ -139,38 +120,50 @@ const insertPertanyaan = async (req, res) => {
 };
 const forwardChaining = async (req, res) => {
   try {
-    const output = await prisma.jawaban.findMany({
+    const output = await prisma.konsul.findMany({
       include: {
-        faktorKdrt: {
-          select: {
-            nama: true,
-            jenisKdrt: {
-              select: {
-                nama: true,
+        // user: true,
+        jawaban: {
+          where: {
+            pertanyaan: "true",
+          },
+          include: {
+            konsul: {
+              include: {
+                prosedur: true,
+              },
+            },
+            faktorKdrt: {
+              include: {
+                jenisKdrt: true,
               },
             },
           },
         },
-        konsul: {
-          select: {
-            date: true,
-            user: {
-              select: {
-                fullName: true,
-              },
-            },
-            prosedur: true,
-          },
-        },
-      },
-      where: {
-        id_konsul: 1,
       },
     });
     return res.json(output);
   } catch (error) {
     console.log(error);
+    return res.json({ error: error.message });
   }
+};
+
+const addSaran = async (req, res) => {
+  const saran = [
+    {
+      saran:
+        "Jika anda mengalami luka ringan atau memar, cobalah untuk membersihkan luka dan beristirahat. Jika luka tidak sembuh atau menimbulkan rasa sakit berkelanjutan, segeralah mencari perhatian medis. Tapi jika mengalami luka serius, pendarahan, atau cedera berat, segera pergi ke rumah sakit atau dokter. Jangan ragu untuk menghubungi layanan darurat jika diperlukan.",
+      id_jk: 1,
+    },
+    {
+      saran: "Jika anda mengalami depresi berat cobalah berkonsultasi dengan psikolog yang dapat membantu untuk mengatasi masalah mental. jangan lupa cari dukungan dari teman dan keluarga.",
+      id_jk: 2,
+    },
+    {
+      saran: "",
+    },
+  ];
 };
 
 module.exports = {

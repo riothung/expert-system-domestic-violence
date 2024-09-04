@@ -21,8 +21,7 @@ model JenisKdrt {
   id Int @id @default(autoincrement())
   nama String
   faktorKdrt FaktorKdrt[]
-  prosedur Prosedur[]
-  // aturan Aturan[]
+  saran Saran?
 }
 
 model FaktorKdrt {
@@ -45,8 +44,6 @@ model DasarHukum {
 model Prosedur {
   id Int @id @default(autoincrement())
   prosedur String
-  id_jk Int
-  jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
   konsul Konsul[]
 }
 
@@ -67,6 +64,13 @@ model Jawaban {
   faktorKdrt FaktorKdrt @relation(fields: [id_fk], references: [id])
   id_konsul Int
   konsul Konsul @relation(fields: [id_konsul], references: [id])
+}
+
+model Saran {
+  id Int @id @default(autoincrement())
+  saran String
+  id_jk Int @unique
+  jenisKdrt JenisKdrt? @relation(fields: [id_jk], references: [id])
 }
 
 // model Aturan {

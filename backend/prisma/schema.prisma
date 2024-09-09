@@ -3,9 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -21,16 +21,25 @@ model JenisKdrt {
   id Int @id @default(autoincrement())
   nama String
   faktorKdrt FaktorKdrt[]
-  saran Saran?
+  dasarHukum DasarHukum[]
+  id_saran Int @unique
+  saran Saran @relation(fields: [id_saran], references: [id])
+  id_prosedur Int 
+  prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
 }
 
 model FaktorKdrt {
   id Int @id @default(autoincrement())
   nama String
   id_jk Int 
-  // aturan Aturan[]
   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
   jawaban Jawaban[]
+  // id_saran Int @unique
+  // saran Saran @relation(fields: [id_saran], references: [id])
+  // id_dasarHukum Int
+  // dasarHukum DasarHukum @relation(fields: [id_dasarHukum], references: [id])
+  // id_prosedur Int @unique
+  // prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
 }
 
 model DasarHukum {
@@ -39,12 +48,18 @@ model DasarHukum {
   pasal Int
   ayat Int
   isi String
+  id_jk Int
+  jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
+  // konsul Konsul[]
+  // faktorKdrt FaktorKdrt[]
 }
 
 model Prosedur {
   id Int @id @default(autoincrement())
   prosedur String
-  konsul Konsul[]
+  konsul Konsul?
+  // faktorKdrt FaktorKdrt?
+  jenisKdrt JenisKdrt[]
 }
 
 model Konsul {
@@ -53,8 +68,12 @@ model Konsul {
   id_user Int
   user User @relation(fields: [id_user], references: [id])
   jawaban Jawaban[]
-  id_prosedur Int?
-  prosedur Prosedur? @relation(fields: [id_prosedur], references: [id])
+  // id_dasarHukum Int
+  // dasarHukum DasarHukum @relation(fields: [id_dasarHukum], references: [id])
+  id_prosedur Int @unique
+  prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
+  // id_saran Int 
+  // saran Saran @relation(fields: [id_saran], references: [id])
 }
 
 model Jawaban {
@@ -69,8 +88,10 @@ model Jawaban {
 model Saran {
   id Int @id @default(autoincrement())
   saran String
-  id_jk Int @unique
-  jenisKdrt JenisKdrt? @relation(fields: [id_jk], references: [id])
+  jenisKdrt JenisKdrt?
+  // konsul Konsul[]
+  // faktorKdrt FaktorKdrt?
+
 }
 
 // model Aturan {

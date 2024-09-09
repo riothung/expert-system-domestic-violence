@@ -65,6 +65,7 @@ const getKonsul = async () => {
             <th>Jenis KDRT</th>
             <th>Dasar Hukum</th>
             <th>Prosedur</th>
+            <th>Saran</th>
           </tr>
         </thead>
         <tbody>`;
@@ -75,8 +76,9 @@ const getKonsul = async () => {
           <tr>
             <td>${jawaban.faktorKdrt.nama}</td>
             <td>${jawaban.faktorKdrt.jenisKdrt.nama}</td>
-            <td>${jawaban.faktorKdrt.jenisKdrt.nama}</td>
-            <td>${jawaban.prosedur}</td>
+            <td>${jawaban.faktorKdrt.jenisKdrt.dasarHukum.isi}</td>
+            <td>${jawaban.faktorKdrt.jenisKdrt.prosedur.prosedur}</td>
+            <td>${jawaban.faktorKdrt.jenisKdrt.saran.saran}</td>
           </tr>`;
       });
 

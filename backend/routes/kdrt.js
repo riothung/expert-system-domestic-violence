@@ -10,6 +10,9 @@ router.get("/konsul", verify, kdrt.getKonsul);
 router.post("/addJenisKdrt", dataKdrt.insertJenisKdrt);
 router.post("/addFaktorKdrt", dataKdrt.insertFaktorKdrt);
 router.post("/addKonsul", dataKdrt.insertPertanyaan);
+router.post("/addSaran", dataKdrt.addSaran);
+router.post("/addDasarHukum", dataKdrt.insertDasarHukum);
+router.post("/addProsedur", dataKdrt.insertProsedur);
 
 router.get("/forwardChaining", dataKdrt.forwardChaining);
 

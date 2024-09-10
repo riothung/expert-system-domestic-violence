@@ -20,7 +20,7 @@ const getFaktorKdrt = async (req, res) => {
 const getPasal = async (req, res) => {
   const pasal = await prisma.dasarHukum.findMany({
     orderBy: {
-      ayat: "asc",
+      pasal: "asc",
     },
   });
 

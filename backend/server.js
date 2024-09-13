@@ -4,12 +4,17 @@ const cors = require("cors");
 // const db = require("./supabase");
 const router = require("./routes/index");
 
+const cp = require('cookie-parser')
+
 const app = express();
 
+app.use(cp())
+
+const frontendOrigin = process.env.FRONTEND_ORIGIN || "http://127.0.0.1:5555";
 app.use(
   cors({
-    credential: true,
-    origin: "*",
+    credentials: true,
+    origin: frontendOrigin,
   })
 );
 

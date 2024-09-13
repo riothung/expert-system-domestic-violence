@@ -74,15 +74,23 @@ const login = async (req, res) => {
 
       if (user.isAdmin == true) {
         const token = jwt.sign({ _id: user.id, isAdmin: true }, "secret", {
-          expiresIn: "2d",
+          expiresIn: "2 days",
         });
-        res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: true, success: true });
+        res.cookie("token", token, {
+          httpOnly: true,
+          sameSite: 'None',
+          secure: true
+        }).status(200).json({ message: "Login success!", isAdmin: true, success: true });
         // res.redirect("../index.html");
       } else {
         const token = jwt.sign({ _id: user.id, isAdmin: false }, "secret", {
           expiresIn: "2d",
         });
-        res.cookie("token", token, { httpOnly: true, sameSite: "none" }).status(200).json({ message: "Login success!", isAdmin: false, success: true });
+        res.cookie("token", token, {
+          httpOnly: true,
+          sameSite: 'None',
+          secure: true
+        }).status(200).json({ message: "Login success!", isAdmin: false, success: true });
       }
     }
   } catch (error) {

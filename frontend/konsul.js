@@ -39,6 +39,7 @@ const hasilKonsul = document.getElementById("hasilKonsul");
 const getKonsul = async () => {
   const response = await fetch("http://localhost:3000/forwardChaining");
   const json = await response.json();
+  console.log(json);
   let i = 1;
   json.forEach((element) => {
     const data = document.createElement("tr");
@@ -76,7 +77,7 @@ const getKonsul = async () => {
           <tr>
             <td>${jawaban.faktorKdrt.nama}</td>
             <td>${jawaban.faktorKdrt.jenisKdrt.nama}</td>
-            <td>${jawaban.faktorKdrt.jenisKdrt.dasarHukum.isi}</td>
+            <td>${jawaban.faktorKdrt.jenisKdrt.dasarHukum.map((dh) => `<a href="pasal.html">Pasal ${dh.pasal} Ayat ${dh.ayat}</a>`)}</td>
             <td>${jawaban.faktorKdrt.jenisKdrt.prosedur.prosedur}</td>
             <td>${jawaban.faktorKdrt.jenisKdrt.saran.saran}</td>
           </tr>`;

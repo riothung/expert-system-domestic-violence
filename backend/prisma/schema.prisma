@@ -56,7 +56,7 @@ model DasarHukum {
 
 model Prosedur {
   id Int @id @default(autoincrement())
-  prosedur String
+  prosedur String @db.LongText
   konsul Konsul?
   // faktorKdrt FaktorKdrt?
   jenisKdrt JenisKdrt[]

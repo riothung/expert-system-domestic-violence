@@ -75,11 +75,11 @@ const getKonsul = async () => {
       element.jawaban.forEach((jawaban) => {
         tableContent += `
           <tr>
-            <td>${jawaban.faktorKdrt.nama}</td>
-            <td>${jawaban.faktorKdrt.jenisKdrt.nama}</td>
-            <td>${jawaban.faktorKdrt.jenisKdrt.dasarHukum.map((dh) => `<a href="pasal.html">Pasal ${dh.pasal} Ayat ${dh.ayat}</a>`)}</td>
-            <td>${jawaban.faktorKdrt.jenisKdrt.prosedur.prosedur}</td>
-            <td>${jawaban.faktorKdrt.jenisKdrt.saran.saran}</td>
+            <td style="text-align: justify;">${jawaban.faktorKdrt.nama}</td>
+            <td style="text-align: justify;">${jawaban.faktorKdrt.jenisKdrt.nama}</td>
+            <td >${jawaban.faktorKdrt.jenisKdrt.dasarHukum.map((dh) => `<a href="pasal.html">Pasal ${dh.pasal} Ayat ${dh.ayat}</a>`)}</td>
+            <td style="text-align: justify;">${jawaban.faktorKdrt.jenisKdrt.prosedur.prosedur}</td>
+            <td style="text-align: justify;">${jawaban.faktorKdrt.jenisKdrt.saran.saran}</td>
           </tr>`;
       });
 

@@ -31,6 +31,7 @@ const insertProsedur = async (req, res) => {
     const newProsedur = await prisma.prosedur.createMany({
       data: dataProsedur,
     });
+    return res.json(newProsedur);
   } catch (error) {
     console.log(error);
     return res.json({ error: error.message });

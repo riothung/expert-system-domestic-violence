@@ -2,11 +2,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// supabase conn
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+//   directUrl = env("DIRECT_URL")
+// }
+// ;
+
+// XAMPP/mysql/local conn
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
 }
+// ;
 
 model User {
   id Int @id @default(autoincrement())
@@ -47,7 +56,7 @@ model DasarHukum {
   undangUndang String
   pasal Int
   ayat Int
-  isi String
+  isi String @db.LongText
   id_jk Int
   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
   // konsul Konsul[]
@@ -57,7 +66,7 @@ model DasarHukum {
 model Prosedur {
   id Int @id @default(autoincrement())
   prosedur String @db.LongText
-  konsul Konsul?
+  konsul Konsul[]
   // faktorKdrt FaktorKdrt?
   jenisKdrt JenisKdrt[]
 }
@@ -70,7 +79,7 @@ model Konsul {
   jawaban Jawaban[]
   // id_dasarHukum Int
   // dasarHukum DasarHukum @relation(fields: [id_dasarHukum], references: [id])
-  id_prosedur Int @unique
+  id_prosedur Int
   prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
   // id_saran Int 
   // saran Saran @relation(fields: [id_saran], references: [id])
@@ -87,7 +96,7 @@ model Jawaban {
 
 model Saran {
   id Int @id @default(autoincrement())
-  saran String
+  saran String @db.LongText
   jenisKdrt JenisKdrt?
   // konsul Konsul[]
   // faktorKdrt FaktorKdrt?

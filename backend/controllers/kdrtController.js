@@ -43,30 +43,57 @@ const getKonsul = async (req, res) => {
   return res.json(konsul);
 };
 
+const getSaran = async (req, res) => {
+  try {
+    const saran = await prisma.saran.findMany();
+    console.log(saran);
+    return res.json(saran);
+  } catch (err) {
+    console.log(err);
+    return res.json({ error: err.message });
+  }
+};
+
 // end of method GET
 
 // method PUT (update)
 
 const updateJenisKdrt = async (req, res) => {
-  const { id, ...update } = req.body;
-  const data = await prisma.jenisKdrt.update({
-    where: {
-      id: id,
-    },
-    data: update,
-  });
-  return res.json(data);
+  try {
+    const id = req.params.id;
+    const { nama } = req.body;
+    const data = await prisma.jenisKdrt.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        nama: nama,
+      },
+    });
+    return res.json(data);
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: error.message });
+  }
 };
 
 const updateFaktorKdrt = async (req, res) => {
-  const { id, ...update } = req.body;
-  const data = await prisma.faktorKdrt.update({
-    where: {
-      id: id,
-    },
-    data: update,
-  });
-  return res.json(data);
+  try {
+    const id = req.params.id;
+    const nama = req.body;
+    const data = await prisma.faktorKdrt.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        nama: nama,
+      },
+    });
+    return res.json(data);
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: error.message });
+  }
 };
 
 const updatePasal = async (req, res) => {
@@ -85,17 +112,22 @@ const updatePasal = async (req, res) => {
 // method DELETE
 
 const deleteJenisKdrt = async (req, res) => {
-  const { id } = req.body;
-  const data = await prisma.jenisKdrt.delete({
-    where: {
-      id: id,
-    },
-  });
-  return res.json(data);
+  try {
+    const id = req.params.id;
+    const data = await prisma.jenisKdrt.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    return res.json(data);
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: error.message });
+  }
 };
 
 const deleteFaktorKdrt = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id;
   const data = await prisma.faktorKdrt.delete({
     where: {
       id: id,
@@ -119,4 +151,8 @@ module.exports = {
   getFaktorKdrt,
   getPasal,
   getKonsul,
+  getSaran,
+  updateJenisKdrt,
+  updateFaktorKdrt,
+  deleteJenisKdrt,
 };

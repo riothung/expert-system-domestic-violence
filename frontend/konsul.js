@@ -35,7 +35,6 @@ konsul.addEventListener("submit", (e) => {
 });
 
 const hasilKonsul = document.getElementById("hasilKonsul");
-
 const getKonsul = async () => {
   const response = await fetch("http://localhost:3000/forwardChaining");
   const json = await response.json();
@@ -48,7 +47,7 @@ const getKonsul = async () => {
     const action = document.createElement("td");
     const modalButton = document.createElement("button");
     modalButton.setAttribute("data-bs-toggle", "modal");
-    modalButton.setAttribute("class", "btn btn-primary");
+    modalButton.setAttribute("class", "btn btn-warning");
     modalButton.setAttribute("data-bs-target", "#detailKonsul");
     modalButton.setAttribute("data-id", element.id);
     modalButton.innerHTML = "Detail";
@@ -102,5 +101,3 @@ const getKonsul = async () => {
 };
 
 getKonsul();
-
-// getHasilKonsul();

@@ -2,6 +2,23 @@ const prisma = require("../db");
 const connect = require("../routes/kdrt");
 // const user = require("../controllers/authController");
 
+// const insertJenisKdrt = async (req, res) => {
+//   const dataJenisKdrt = [
+//     { nama: "Kekerasan Fisik", id_saran: 1, id_prosedur: 1 },
+//     { nama: "Kekerasan Psikis", id_saran: 2, id_prosedur: 1 },
+//     { nama: "Kekerasan Seksual", id_saran: 3, id_prosedur: 1 },
+//     { nama: "Penelantaran Rumah Tangga", id_saran: 4, id_prosedur: 1 },
+//   ];
+//   try {
+//     const newJenisKdrt = await prisma.jenisKdrt.createMany({
+//       data: dataJenisKdrt,
+//     });
+//     return res.json(newJenisKdrt);
+//   } catch (error) {
+//     console.log(error);
+//     return res.json({ error: error.message });
+//   }
+// };
 const insertJenisKdrt = async (req, res) => {
   const dataJenisKdrt = [
     { nama: "Kekerasan Fisik", id_saran: 1, id_prosedur: 1 },

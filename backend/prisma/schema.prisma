@@ -33,7 +33,7 @@ model JenisKdrt {
   dasarHukum DasarHukum[]
   id_saran Int @unique
   saran Saran @relation(fields: [id_saran], references: [id])
-  id_prosedur Int 
+  id_prosedur Int
   prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
 }
 

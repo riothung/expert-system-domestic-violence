@@ -21,6 +21,8 @@ const forwardChaining = async () => {
         pertanyaan: jawabanUser,
       }),
     });
+    // const jsonKirimJawaban = kirimJawaban.json()
+    if (kirimJawaban.ok) window.location.reload();
   } catch (error) {
     console.log(error);
     return;
@@ -88,8 +90,13 @@ const getKonsul = async () => {
       document.querySelector(".modal-body").innerHTML = tableContent;
     });
 
+    // Format the date in 'YYYY-MM-DD' format
+    const formattedDate = new Date(element.date).toISOString().split("T")[0];
+
+    // Use the formatted date in your table
+
     action.appendChild(modalButton);
-    date.innerHTML = element.date;
+    date.innerHTML = formattedDate;
     no.innerHTML = i;
     data.appendChild(no);
     data.appendChild(date);

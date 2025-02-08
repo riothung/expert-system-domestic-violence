@@ -1,5 +1,4 @@
 const prisma = require("../db");
-const { connect } = require("../routes/kdrt");
 
 // method GET
 
@@ -54,6 +53,52 @@ const getSaran = async (req, res) => {
   }
 };
 
+const getKonsulDate = async (req, res) => {
+  try {
+    const { month, year } = req.query;
+    console.log("Received month:", month, "Received year:", year);
+
+    // Create start date (first day of the month)
+    const startDate = new Date(`${year}-${month}-01`);
+    const endDate = new Date(`${year}-${parseInt(month) + 1}-01`);
+
+    const sendDate = await prisma.konsul.findMany({
+      where: {
+        date: {
+          gte: startDate,
+          lt: endDate,
+        },
+      },
+      include: {
+        user: true,
+        jawaban: {
+          where: {
+            pertanyaan: "true",
+          },
+          include: {
+            konsul: true,
+            faktorKdrt: {
+              include: {
+                jenisKdrt: {
+                  include: {
+                    saran: true,
+                    dasarHukum: true,
+                    prosedur: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return res.json(sendDate);
+  } catch (err) {
+    // console.log("Error: ", error);
+    return res.json({ error: err.message }).status(400);
+  }
+};
+
 // end of method GET
 
 // method PUT (update)
@@ -96,17 +141,6 @@ const updateFaktorKdrt = async (req, res) => {
   }
 };
 
-const updatePasal = async (req, res) => {
-  const { id, ...update } = req.body;
-  const data = await prisma.dasarHukum.update({
-    where: {
-      id: id,
-    },
-    data: update,
-  });
-  return res.json(data);
-};
-
 // end of method PUT (UPDATE)
 
 // method DELETE
@@ -136,23 +170,15 @@ const deleteFaktorKdrt = async (req, res) => {
   return res.json(data);
 };
 
-const deletePasal = async (req, res) => {
-  const { id } = req.body;
-  const data = await prisma.dasarHukum.delete({
-    where: {
-      id: id,
-    },
-  });
-  return res.json(data);
-};
-
 module.exports = {
   getJenisKdrt,
   getFaktorKdrt,
   getPasal,
   getKonsul,
   getSaran,
+  getKonsulDate,
   updateJenisKdrt,
   updateFaktorKdrt,
   deleteJenisKdrt,
+  deleteFaktorKdrt,
 };

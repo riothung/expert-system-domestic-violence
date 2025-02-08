@@ -17,7 +17,7 @@ const responseRegis = async () => {
       body: JSON.stringify({ fullName, email, password }),
     });
     const regisData = await data.json();
-    // if (regisData.success) return (window.location.href = "./login.html");
+    if (regisData.success) return (window.location.href = "/login.html");
   } catch (error) {
     console.error("Error:", error);
     alert("An error occurred. Please try again later.");

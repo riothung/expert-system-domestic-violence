@@ -43,12 +43,6 @@ model FaktorKdrt {
   id_jk Int 
   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
   jawaban Jawaban[]
-  // id_saran Int @unique
-  // saran Saran @relation(fields: [id_saran], references: [id])
-  // id_dasarHukum Int
-  // dasarHukum DasarHukum @relation(fields: [id_dasarHukum], references: [id])
-  // id_prosedur Int @unique
-  // prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
 }
 
 model DasarHukum {
@@ -59,15 +53,12 @@ model DasarHukum {
   isi String @db.LongText
   id_jk Int
   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
-  // konsul Konsul[]
-  // faktorKdrt FaktorKdrt[]
 }
 
 model Prosedur {
   id Int @id @default(autoincrement())
   prosedur String @db.LongText
   konsul Konsul[]
-  // faktorKdrt FaktorKdrt?
   jenisKdrt JenisKdrt[]
 }
 
@@ -77,12 +68,8 @@ model Konsul {
   id_user Int
   user User @relation(fields: [id_user], references: [id])
   jawaban Jawaban[]
-  // id_dasarHukum Int
-  // dasarHukum DasarHukum @relation(fields: [id_dasarHukum], references: [id])
   id_prosedur Int
   prosedur Prosedur @relation(fields: [id_prosedur], references: [id])
-  // id_saran Int 
-  // saran Saran @relation(fields: [id_saran], references: [id])
 }
 
 model Jawaban {
@@ -98,18 +85,8 @@ model Saran {
   id Int @id @default(autoincrement())
   saran String @db.LongText
   jenisKdrt JenisKdrt?
-  // konsul Konsul[]
-  // faktorKdrt FaktorKdrt?
-
 }
 
-// model Aturan {
-//   id Int @id @default(autoincrement())
-//   id_jk Int
-//   id_ck Int 
-//   faktorKdrt CiriKdrt @relation(fields: [id_ck], references: [id])
-//   jenisKdrt JenisKdrt @relation(fields: [id_jk], references: [id])
-// }
 
 
 

@@ -9,6 +9,7 @@ router.get("/pasal", kdrt.getPasal);
 router.get("/konsul", kdrt.getKonsul);
 router.get("/saran", kdrt.getSaran);
 router.get("/forwardChaining", dataKdrt.forwardChaining);
+router.get("/konsulDate", kdrt.getKonsulDate);
 
 router.post("/addJenisKdrt", dataKdrt.insertJenisKdrt);
 router.post("/addFaktorKdrt", dataKdrt.insertFaktorKdrt);

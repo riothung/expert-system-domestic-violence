@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
 
   try {
     if (req.body.fullName || req.body.email || hashedPassword) {
-      const admin = await prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           fullName: req.body.fullName,
           email: req.body.email,
@@ -49,8 +49,8 @@ const registerUser = async (req, res) => {
           isAdmin: false,
         },
       });
-      if (admin) return res.status(200).json({ message: "Account created successfully" });
-      res.redirect("/login");
+      if (user) return res.status(200).json({ message: "Account created successfully" });
+      // res.redirect("/login.html");
     } else {
       return res.status(400).json({ message: "Email atau Password salah!" });
     }
@@ -67,7 +67,7 @@ const login = async (req, res) => {
 
     if (req.body.email !== "" && req.body.password !== "") {
       const user = await prisma.user.findUnique({ where: { email: req.body.email } });
-      if (!user) return res.status(400).json({ message: "Email doesn't exist!" });
+      if (!user) return res.status(404).json({ message: "Email doesn't exist!" });
 
       const checkPassword = await bcrypt.compare(req.body.password, user.password);
       if (!checkPassword) return res.status(401).json({ message: "Wrong password!" });

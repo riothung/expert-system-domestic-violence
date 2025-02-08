@@ -31,8 +31,10 @@ app.use(
   })
 );
 
+const PORT = 3000;
+
 app.use(router);
 
-app.listen(3000, () => {
-  console.log("server is ready");
+app.listen(PORT, () => {
+  console.log(`server is listening in port ${PORT}`);
 });

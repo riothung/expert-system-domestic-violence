@@ -1,24 +1,6 @@
 const prisma = require("../db");
-const connect = require("../routes/kdrt");
 // const user = require("../controllers/authController");
 
-// const insertJenisKdrt = async (req, res) => {
-//   const dataJenisKdrt = [
-//     { nama: "Kekerasan Fisik", id_saran: 1, id_prosedur: 1 },
-//     { nama: "Kekerasan Psikis", id_saran: 2, id_prosedur: 1 },
-//     { nama: "Kekerasan Seksual", id_saran: 3, id_prosedur: 1 },
-//     { nama: "Penelantaran Rumah Tangga", id_saran: 4, id_prosedur: 1 },
-//   ];
-//   try {
-//     const newJenisKdrt = await prisma.jenisKdrt.createMany({
-//       data: dataJenisKdrt,
-//     });
-//     return res.json(newJenisKdrt);
-//   } catch (error) {
-//     console.log(error);
-//     return res.json({ error: error.message });
-//   }
-// };
 const insertJenisKdrt = async (req, res) => {
   const dataJenisKdrt = [
     { nama: "Kekerasan Fisik", id_saran: 1, id_prosedur: 1 },
@@ -179,6 +161,9 @@ const insertPertanyaan = async (req, res) => {
       },
     });
 
+    // Format the date to 'YYYY-MM-DD'
+    const formattedDate = new Date(newKonsul.date).toISOString().split("T")[0];
+
     const dataPertanyaan = req.body.pertanyaan;
     console.log(dataPertanyaan);
 
@@ -198,7 +183,14 @@ const insertPertanyaan = async (req, res) => {
         console.log(jawabanUser); // to check the output
       }
     }
-    return res.json("Berhasil");
+
+    return res.json({
+      message: "Berhasil", // Include your success message here
+      data: {
+        ...newKonsul,
+        date: formattedDate, // Replace the date with the formatted version
+      },
+    });
   } catch (error) {
     console.log(error);
     return res.json({ error: error.message });
@@ -208,7 +200,7 @@ const forwardChaining = async (req, res) => {
   try {
     const output = await prisma.konsul.findMany({
       include: {
-        // user: true,
+        user: true,
         jawaban: {
           where: {
             pertanyaan: "true",
@@ -231,42 +223,6 @@ const forwardChaining = async (req, res) => {
       },
     });
     return res.json(output);
-    // const konsulData = await prisma.konsul.findMany({
-    //   include: {
-    //     jawaban: {
-    //       include: {
-    //         faktorKdrt: {
-    //           include: {
-    //             jenisKdrt: true,
-    //           },
-    //         },
-    //       },
-    //     },
-    //     prosedur: true,
-    //   },
-    // });
-    // // Tambahkan query tambahan untuk mendapatkan saran dan dasar hukum
-    // const output = await Promise.all(
-    //   konsulData.map(async (konsul) => {
-    //     const jenisKdrtId = konsul.jawaban[0]?.faktorKdrt?.jenisKdrt?.id;
-    //     const saranData = jenisKdrtId
-    //       ? await prisma.saran.findMany({
-    //           where: { id_jk: jenisKdrtId },
-    //         })
-    //       : [];
-    //     const dasarHukumData = jenisKdrtId
-    //       ? await prisma.dasarHukum.findMany({
-    //           where: { id_jk: jenisKdrtId },
-    //         })
-    //       : [];
-    //     return {
-    //       ...konsul,
-    //       saran: saranData,
-    //       dasarHukum: dasarHukumData,
-    //     };
-    //   })
-    // );
-    // return res.json(output);
   } catch (error) {
     console.log(error);
     return res.json({ error: error.message });
